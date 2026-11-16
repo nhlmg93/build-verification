@@ -13,6 +13,10 @@ have a clear way to verify the behavior.
 The goal: more reliable verification, clearer evidence, and fewer tokens spent
 reconstructing how the project works.
 
+Use the skill for both initial setup and ongoing maintenance: adding capabilities,
+updating commands as the project changes, and refining existing verification
+behavior together. Existing setups are maintained in place, not scaffolded again.
+
 **Experimental and opinionated.** This is a starting point for a workflow, not a
 complete verification framework.
 
