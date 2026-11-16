@@ -1,0 +1,25 @@
+{
+  "name": "verification-cli",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "verify": "tsx src/index.ts",
+    "lint": "oxlint --no-ignore --config oxlint.config.ts src",
+    "format": "oxfmt --config .oxfmtrc.json src",
+    "format:check": "oxfmt --check --config .oxfmtrc.json src"
+  },
+  "dependencies": {
+    "commander": "^14.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "@oxlint/plugins": "1.78.0",
+    "oxfmt": "0.63.0",
+    "oxlint": "1.78.0",
+    "tsx": "^4.0.0",
+    "typescript": "^5.0.0"
+  }
+}

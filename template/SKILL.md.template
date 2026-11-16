@@ -1,0 +1,16 @@
+---
+name: verify
+description: "Run this project's verification capabilities when explicitly invoked by the user."
+disable-model-invocation: true
+---
+
+# Verify
+
+Only perform verification when the user invokes this skill.
+Never independently invent or extend this skill or its tools/scripts.
+
+Use the CLI in `cli/` beside this file. Discover command syntax through `--help`.
+
+## Project context
+
+<!-- Document agreed prerequisites, execution boundaries, and how to interpret evidence. -->
