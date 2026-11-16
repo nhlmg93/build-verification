@@ -1,24 +1,16 @@
-# Build Verification
+# Build verification
 
-Build a CLI **with your coding agent** for repeatable, automated verification.
+Build a TypeScript CLI with your coding agent for repeatable, automated verification.
 
-You and your agent already know how the project should behave. Turn that shared
-knowledge into commands the agent can run again, instead of rediscovering the
-workflow and assembling ad hoc commands every time.
+Turn what you and your agent know about the project into commands that exercise
+its behavior and report what happened. Future agents can reuse those commands
+instead of reconstructing the process each time. The aim is to improve reliability
+and reduce the tokens spent rediscovering how to verify the project.
 
-Build one capability together: what to exercise, what to observe, and what the
-result means. Capture it in a project-specific TypeScript CLI so future agents
-have a clear way to verify the behavior.
+Use this skill to create the CLI and maintain it as the project changes. You and
+the agent decide what to build, one command at a time.
 
-The goal: more reliable verification, clearer evidence, and fewer tokens spent
-reconstructing how the project works.
-
-Use the skill for both initial setup and ongoing maintenance: adding capabilities,
-updating commands as the project changes, and refining existing verification
-behavior together. Existing setups are maintained in place, not scaffolded again.
-
-**Experimental and opinionated.** This is a starting point for a workflow, not a
-complete verification framework.
+This workflow is experimental.
 
 ## Install
 
@@ -26,42 +18,42 @@ complete verification framework.
 npx skills add nhlmg93/build-verification
 ```
 
-For Pi, you can also place this repository at:
-
-```text
-~/.pi/agent/skills/build-verification/
-```
-
-Reload Pi, then invoke:
+For a manual Pi installation, place this repository at
+`~/.pi/agent/skills/build-verification/`. Run `/reload`, then invoke:
 
 ```text
 /skill:build-verification
 ```
 
-This skill is user-invoked. The documented slash commands are Pi commands; other
-agents may expose skills differently.
+The slash commands in this README are for Pi. If you use another agent, ask it to
+adapt the skill's paths, invocation syntax, and tool integrations.
 
-Using another harness? Ask your agent to tailor the skill to it—adjust discovery
-paths, invocation syntax, and integration points while keeping the collaborative
-workflow.
+## Build and maintain verification
 
-## The workflow
+For a new setup, the agent creates an empty CLI project and a project-local verify
+skill. For an existing setup, it works on the files already there.
 
-1. **Scaffold.** Create the verification skill, an empty CLI project, and starter traits.
-2. **Build together.** Discuss one capability and implement it when you ask.
-3. **Review.** Use Traits to review the implementation's structure and help text.
-4. **Use it.** Explicitly invoke the project's verify skill to run verification.
+Discuss a command's purpose, what it should do, and how to interpret its output.
+The agent implements the change when you ask, then uses Traits to review the code.
+It returns to the conversation before adding another capability.
 
-For example, you might work toward a command like:
+When you want to run verification, invoke the project's skill:
+
+```text
+/skill:verify
+```
+
+The CLI starts without project-specific commands. For example, you might build
+an `inspect-session` command and run it with:
 
 ```sh
 npm --prefix .pi/skills/verify/cli run verify -- inspect-session --id example
 ```
 
-That command is illustrative, **not included**. The scaffold contains no
-project-specific verification commands. You decide what is worth building.
+This command is an example, not part of the template. Once you have added commands,
+use the CLI's `--help` to discover their arguments and options.
 
-## What gets created
+## Generated files
 
 ```text
 .pi/skills/verify/
@@ -82,69 +74,63 @@ project-specific verification commands. You decide what is worth building.
 └── verification-structure.md
 ```
 
-- **Commander.js** supplies command parsing and generated `--help`.
-- **TypeScript + Node + tsx** keep the CLI in a small, ordinary project.
-- **Oxfmt and Oxlint** provide formatting and linting scripts.
-- **Dillon Mulroy's anti-slop** generic rules are vendored with licenses and provenance.
-- **Traits** review whether help reflects behavior and the CLI follows the expected structure.
+The CLI uses Commander.js for command parsing and `--help`, and tsx to run
+TypeScript on Node. Its package scripts include `verify`, `lint`, `format`, and
+`format:check`. Oxlint uses Dillon Mulroy's vendored anti-slop rules. Oxfmt handles
+formatting.
 
-The CLI has its own `AGENTS.md` for maintenance instructions. The verify skill
-stays focused on using the project tooling, not repeating how it was scaffolded.
+`cli/AGENTS.md` contains maintenance instructions. The project verify skill
+documents how to use the commands and interpret their results.
 
-## Scaffold directly
+## Run the scaffold directly
 
-Requires Node.js 22 or later:
+With Node.js 22 or later:
 
 ```sh
 node /path/to/build-verification/scripts/scaffold.mjs /path/to/project
 ```
 
-The script:
+The script copies local templates. It refuses to overwrite an existing verify
+setup or conflicting trait definitions. It leaves identical traits in place.
+It does not download code, install dependencies, or run checks.
 
-- Refuses to overwrite an existing `.pi/skills/verify/`.
-- Preserves identical existing traits and stops on conflicting definitions.
-- Copies a local template; it does not fetch code, install dependencies, or run checks.
+Agree on dependency installation with your agent. Use your project's package
+manager and lockfile. If the project uses a workspace, decide whether to add the
+CLI to it.
 
-Choose dependency installation with the user and use the project's package
-manager and lockfile. In workspaces, include the CLI in the workspace as appropriate.
+## Configure Traits
 
-The CLI package provides `verify`, `lint`, `format`, and `format:check` scripts.
-The scaffold does not invoke them.
+Configure [Traits](https://traits.sh/) in your agent to use the review step.
+This repository does not install or configure the Traits server.
 
-## Traits
+The scaffold copies two traits into `.agents/traits/`:
 
-[Traits](https://traits.sh/) is a separate integration. Configure its tools in
-your agent to use the review step; this repository does not install or configure
-the Traits server.
+- `current-help` requires command descriptions, arguments, options, and examples
+  to match the implementation.
+- `verification-structure` defines the CLI's directory structure and tooling.
 
-The bundled traits are copied into the project's `.agents/traits/`:
+Traits review code. They cannot determine whether you approved a change.
+[`IMPLEMENT.md`](IMPLEMENT.md) tells the agent how to build each change with you.
+If the checker is unavailable, the agent reports that.
 
-- **current-help:** command descriptions, arguments, options, and examples match the implementation.
-- **verification-structure:** keep an ordinary Commander TypeScript project beside the verify skill.
+## Agent instructions
 
-Traits review code. They cannot establish whether a user approved a change.
-Collaboration belongs in [`IMPLEMENT.md`](IMPLEMENT.md), not in a code-review trait.
-If the checker is unavailable, the agent is instructed to report that.
+The skill instructs the agent to build one capability with you at a time, keep
+the verification tooling within that agreed scope, and run verification only
+when you invoke `/skill:verify`. It also prohibits tests for the CLI itself.
 
-## Deliberate boundaries
-
-- Build one capability with the user, then return to the conversation.
-- Do not create tests for the verification CLI.
-- Run verification only when the user invokes `/skill:verify`.
-- Do not independently invent or extend the project's verification tooling.
-
-These are agent instructions, **not a sandbox or runtime permission system**.
-The workflow depends on the agent following them.
+These instructions are not runtime permission controls. They depend on the agent
+following them.
 
 ## Credits and license
 
-Inspired by ideas from **pstack** and **[Dillon Mulroy](https://github.com/dmmulroy)**.
-Built around **[Traits](https://traits.sh/)** by
-**[Crosshatch Labs](https://github.com/crosshatch/traits)** for reviewing implementation preferences.
+Ideas from pstack and [Dillon Mulroy](https://github.com/dmmulroy) inspired this
+workflow. [Crosshatch Labs](https://github.com/crosshatch/traits) built
+[Traits](https://traits.sh/), which provides the code review used here.
 
 The skill, scaffold, and templates are MIT licensed.
 
 The vendored [anti-slop](https://github.com/dmmulroy/anti-slop) rules are by
-Dillon Mulroy and contributors. Their MIT license, upstream revision, and nested
-ESLint Stylistic notices are preserved under
+Dillon Mulroy and contributors. Their license, upstream revision, and nested
+ESLint Stylistic notices are in
 [`template/cli/tools/anti-slop/`](template/cli/tools/anti-slop/).
