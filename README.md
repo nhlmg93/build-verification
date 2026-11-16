@@ -12,6 +12,15 @@ the agent decide what to build, one command at a time.
 
 This workflow is experimental.
 
+## Examples
+
+- [Simple CLI](examples/simple/) checks a JSON config and prints its result.
+- [Web reports](examples/web-reports/) runs the same check and generates an HTML
+  report with rerun, archive, and delete buttons. It includes a report-maintenance
+  trait and its own setup instructions.
+
+These are examples to adapt with your agent. The main scaffold remains CLI-only.
+
 ## Install
 
 ```sh
