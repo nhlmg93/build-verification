@@ -1,0 +1,17 @@
+{
+  "name": "docker-verification-example",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=22" },
+  "scripts": { "verify": "tsx src/index.ts" },
+  "dependencies": {
+    "commander": "^14.0.0",
+    "dockerode": "^4.0.0"
+  },
+  "devDependencies": {
+    "@types/dockerode": "^3.3.0",
+    "@types/node": "^22.0.0",
+    "tsx": "^4.0.0",
+    "typescript": "^5.0.0"
+  }
+}

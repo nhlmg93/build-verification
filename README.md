@@ -18,6 +18,9 @@ This workflow is experimental.
 - [Web reports](examples/web-reports/) runs the same check and generates an HTML
   report with rerun, archive, and delete buttons. It includes a report-maintenance
   trait and its own setup instructions.
+- [Docker testbed](examples/docker/) uses Dockerode to create independent
+  environments for parallel runs. The agent uses the normal CLI against each
+  environment's endpoint.
 
 These are examples to adapt with your agent. The main scaffold remains CLI-only.
 Examples live outside the installable skill directory and are not installed with it.
