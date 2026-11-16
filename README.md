@@ -20,14 +20,16 @@ This workflow is experimental.
   trait and its own setup instructions.
 
 These are examples to adapt with your agent. The main scaffold remains CLI-only.
+Examples live outside the installable skill directory and are not installed with it.
 
 ## Install
 
 ```sh
-npx skills add nhlmg93/build-verification
+npx skills add nhlmg93/build-verification --skill build-verification
 ```
 
-For a manual Pi installation, place this repository at
+For a manual Pi installation, copy `skills/build-verification/` from this
+repository to
 `~/.pi/agent/skills/build-verification/`. Run `/reload`, then invoke:
 
 ```text
@@ -119,7 +121,7 @@ The scaffold copies two traits into `.agents/traits/`:
 - `verification-structure` defines the CLI's directory structure and tooling.
 
 Traits review code. They cannot determine whether you approved a change.
-[`IMPLEMENT.md`](IMPLEMENT.md) tells the agent how to build each change with you.
+[`IMPLEMENT.md`](skills/build-verification/IMPLEMENT.md) tells the agent how to build each change with you.
 If the checker is unavailable, the agent reports that.
 
 ## Agent instructions
@@ -142,4 +144,4 @@ The skill, scaffold, and templates are MIT licensed.
 The vendored [anti-slop](https://github.com/dmmulroy/anti-slop) rules are by
 Dillon Mulroy and contributors. Their license, upstream revision, and nested
 ESLint Stylistic notices are in
-[`template/cli/tools/anti-slop/`](template/cli/tools/anti-slop/).
+[`skills/build-verification/template/cli/tools/anti-slop/`](skills/build-verification/template/cli/tools/anti-slop/).
