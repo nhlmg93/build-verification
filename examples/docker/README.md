@@ -57,7 +57,10 @@ Replace `YOUR_RUN_ID` with the run ID returned by setup:
 npm --prefix examples/docker run verify -- testbed down YOUR_RUN_ID
 ```
 
-Cleanup checks resource labels before removing the run's container and network.
+Cleanup finds containers and networks by this example's owner label and the run
+ID. It force-removes matching containers, including stopped ones, before removing
+matching networks. Already missing resources are fine, so cleanup can be repeated.
+If removal fails, it still attempts the remaining cleanup and reports the failures.
 It does not prune Docker or remove other runs. There are no persistent volumes.
 Testbeds remain running until you remove them, even if a verification fails.
 

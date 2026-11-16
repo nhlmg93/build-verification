@@ -96,21 +96,41 @@ export async function startTestbed() {
 }
 
 export async function stopTestbed(runId: string): Promise<void> {
-  const name = resourceName(runId);
-  const container = docker.getContainer(name);
-  const network = docker.getNetwork(name);
-  const containerInfo = await container.inspect();
-  const networkInfo = await network.inspect();
+  resourceName(runId);
+  const filters = {
+    label: [`${ownerLabel}=${owner}`, `${runLabel}=${runId}`],
+  };
+  const cleanupErrors: Error[] = [];
 
-  if (
-    containerInfo.Config.Labels?.[ownerLabel] !== owner ||
-    containerInfo.Config.Labels?.[runLabel] !== runId ||
-    networkInfo.Labels?.[ownerLabel] !== owner ||
-    networkInfo.Labels?.[runLabel] !== runId
-  ) {
-    throw new Error("Resource labels do not match this example and run. Nothing removed.");
+  try {
+    const containers = await docker.listContainers({ all: true, filters });
+
+    for (const container of containers) {
+      try {
+        await docker.getContainer(container.Id).remove({ force: true, v: true });
+      } catch (error) {
+        cleanupErrors.push(new Error(`Could not remove container ${container.Id}.`, { cause: error }));
+      }
+    }
+  } catch (error) {
+    cleanupErrors.push(new Error("Could not list this run's containers.", { cause: error }));
   }
 
-  await container.remove({ force: true, v: true });
-  await network.remove();
+  try {
+    const networks = await docker.listNetworks({ filters });
+
+    for (const network of networks) {
+      try {
+        await docker.getNetwork(network.Id).remove();
+      } catch (error) {
+        cleanupErrors.push(new Error(`Could not remove network ${network.Id}.`, { cause: error }));
+      }
+    }
+  } catch (error) {
+    cleanupErrors.push(new Error("Could not list this run's networks.", { cause: error }));
+  }
+
+  if (cleanupErrors.length) {
+    throw new AggregateError(cleanupErrors, `Cleanup incomplete for run ${runId}. Run down again to retry.`);
+  }
 }
