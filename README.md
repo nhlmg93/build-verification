@@ -1,14 +1,14 @@
 # Build Verification
 
-Build a CLI **with your coding agent** for repeatable, automated feature verification.
+Build a CLI **with your coding agent** for repeatable, automated verification.
 
-You and your agent already know how a feature should behave. Turn that shared
+You and your agent already know how the project should behave. Turn that shared
 knowledge into commands the agent can run again, instead of rediscovering the
 workflow and assembling ad hoc commands every time.
 
 Build one capability together: what to exercise, what to observe, and what the
 result means. Capture it in a project-specific TypeScript CLI so future agents
-have a clear way to verify the feature.
+have a clear way to verify the behavior.
 
 The goal: more reliable verification, clearer evidence, and fewer tokens spent
 reconstructing how the project works.
