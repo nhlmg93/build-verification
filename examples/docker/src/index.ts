@@ -1,6 +1,7 @@
 import { Command } from "commander";
 import { checkHttp } from "./core/check-http.js";
-import { startTestbed, stopTestbed } from "./core/testbed.js";
+import { startTestbed } from "./core/testbed.js";
+import { stopTestbed } from "./core/cleanup.js";
 
 const program = new Command()
   .name("verify")

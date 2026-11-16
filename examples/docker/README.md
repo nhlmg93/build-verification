@@ -69,7 +69,9 @@ returned run ID and clean up each one.
 
 ## Source
 
-- `src/core/testbed.ts` implements Docker setup and cleanup.
+- `src/core/testbed.ts` starts the testbed.
+- `src/core/cleanup.ts` removes the run's resources, including after failed setup.
+- `src/core/docker.ts` configures Docker access and run labels.
 - `src/core/check-http.ts` implements the HTTP verification.
 - `src/index.ts` exposes those operations as Commander commands.
 
