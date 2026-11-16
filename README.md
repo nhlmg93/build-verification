@@ -1,10 +1,17 @@
 # Build Verification
 
-Build verification tooling **with your coding agent**, one useful command at a time.
+Build a CLI **with your coding agent** for repeatable, automated feature verification.
 
-Instead of asking an agent to invent a test suite, work out what you want to
-observe, agree on a small command, and build it together. The result is a
-project-specific TypeScript CLI you can understand and use again.
+You and your agent already know how a feature should behave. Turn that shared
+knowledge into commands the agent can run again, instead of rediscovering the
+workflow and assembling ad hoc commands every time.
+
+Build one capability together: what to exercise, what to observe, and what the
+result means. Capture it in a project-specific TypeScript CLI so future agents
+have a clear way to verify the feature.
+
+The goal: more reliable verification, clearer evidence, and fewer tokens spent
+reconstructing how the project works.
 
 **Experimental and opinionated.** This is a starting point for a workflow, not a
 complete verification framework.
