@@ -130,6 +130,10 @@ The workflow depends on the agent following them.
 
 ## Credits and license
 
+Inspired by ideas from **pstack** and **[Dillon Mulroy](https://github.com/dmmulroy)**.
+Built around **[Traits](https://traits.sh/)** by
+**[Crosshatch Labs](https://github.com/crosshatch/traits)** for reviewing implementation preferences.
+
 The skill, scaffold, and templates are MIT licensed.
 
 The vendored [anti-slop](https://github.com/dmmulroy/anti-slop) rules are by
