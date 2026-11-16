@@ -124,7 +124,7 @@ following them.
 
 ## Credits and license
 
-Ideas from pstack and [Dillon Mulroy](https://github.com/dmmulroy) inspired this
+Ideas from Potato, creator of pstack, and [Dillon Mulroy](https://github.com/dmmulroy) inspired this
 workflow. [Crosshatch Labs](https://github.com/crosshatch/traits) built
 [Traits](https://traits.sh/), which provides the code review used here.
 
