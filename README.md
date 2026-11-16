@@ -41,6 +41,10 @@ Reload Pi, then invoke:
 This skill is user-invoked. The documented slash commands are Pi commands; other
 agents may expose skills differently.
 
+Using another harness? Ask your agent to tailor the skill to it—adjust discovery
+paths, invocation syntax, and integration points while keeping the collaborative
+workflow.
+
 ## The workflow
 
 1. **Scaffold.** Create the verification skill, an empty CLI project, and starter traits.
